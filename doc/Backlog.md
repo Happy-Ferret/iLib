@@ -9,10 +9,12 @@ Here is a list of features in no particular order that may be developed for iLib
 * code to auto-detect the locale of the environment that iLib is running in - DONE
     * perhaps part of the Locale class when you call the constructor with no arguments?
     * check the environment, http headers if available, browser variables if available, etc.
+    * in a browser, check for locale cookies in the request
 * person names - DONE
     * parsing
     * formatting
     * sort names (in German and Dutch, "von Beethoven" sorts under "B" instead of "V")
+    * add more locales
 * phone numbers - DONE (Needs more locale data for many other countries)
     * parsing
     * formatting
@@ -20,7 +22,11 @@ Here is a list of features in no particular order that may be developed for iLib
     * normalization
     * matching
     * letter dialing conversion (1-800-FLOWERS = 1-800-356-9377) (This part is not done)
-* address parsing and formatting - DONE
+    * Extract format information from libphonenumber and add it in ilib format to support
+    many other countries
+* address parsing and formatting
+    * Support most countries - DONE
+    * Add remaining countries
 * number parsing and formatting
     * better support for Asian formats
     * currency conversion via OANDA or other such services
@@ -28,7 +34,7 @@ Here is a list of features in no particular order that may be developed for iLib
 * calendars
     * Persian calendar - DONE
     * Hebrew calendar - DONE
-    * Chinese lunar calendar
+    * Chinese lunar calendar - DONE
     * Japanese Imperial
     * phase of the moon calculations - DONE
     * solstice and equinox calculations - DONE
@@ -67,6 +73,11 @@ Here is a list of features in no particular order that may be developed for iLib
 * resource bundle updates
     * translation wrapper around Bing, Babelfish, Google in the ResBundle object
     * support fetching translations dynamically via AJAX (perhaps requiring the jQuery integration?)
+    * shorter function names getString() and getStringJS -> t()  perhaps as an alias
+    * support localization of arrays and objects:
+        * getString(array) -> returns an array where each string in the array is translated
+        * getString(object, jsonSchema) -> return a copy of the object where the value of every
+        property that has localizable: true in the given json schema is translated
 * charset object - DONE
     * identification
     * normalization of IANA charset names
@@ -105,6 +116,7 @@ Here is a list of features in no particular order that may be developed for iLib
 * More locale data 
     * translations for strings to more locales - DONE
     * date components and formats - DONE
+    * address parsing info
     * name parsing info
     * paper sizes - DONE
     * default timezone for the locale, and lists of timezones in the locale - DONE
@@ -115,6 +127,23 @@ Here is a list of features in no particular order that may be developed for iLib
     * configuration detailing dates of transition from Julian to Gregorian calendar 
     * phone number info and geolocations
     * name configuration
+* Time Zones
+    * Support optional historical time zones as well as the most current. If correctness
+    is required, the caller should be able to choose the full (and LARGE!) tz data set.
+    If footprint is more of a problem, the caller should be able to choose the smaller
+    current time zones only (which is the current state of the code).
+    * Support calculation and conversion of time zones using the historical data
+    * Ability to read locale binary tzinfo files if they are available (for example on nodejs or qml)
+        * Allows ilib to use the same info as the OS
+        * Not applicable for web pages obviously
+* List Formatter - DONE
+* Alphabetic Index
+    * create an index per locale, add items to it, and allow caller to get the buckets with the items appropriately sorted
+    * should be based on the same collation data as the collator
+* ES6 support
+    * Backtick string localization? (Is this even possible? Strings are evaluated before functions are called...)
+    * New classes will be coded with ES6 classes
+        * Depend on BabelJS for polyfill?
 
 ## Features for the JS Assembly Tool ##
 
@@ -123,3 +152,35 @@ Here are a proposed set of features to add to the assembly tool.
 * Ability to read a set of HTML/PHP/JSP/etc. files for depends and data directives without including them into the output file. This allows you to assemble an iLib JS file with only the stuff that is needed by your web app.
 * Rewrite in Javascript
 * Make a simple ilib generator web page, similar to the jquery-ui theme generator, where you pick which classes you want and which locales you want, and it will build a copy of ilib for you with all dependencies satisfied
+* Support Webpack and/or requirejs
+    * Possibly replace the JS assembly tool with them
+
+## Localization Tool
+
+* introduce a new localization tool
+    * knows how to pull out strings from source code done with ilib
+    * read/write xliff files with extracted strings or translations
+    * write out json or js files as needed with translations in it
+    * save/retrieve translations or extracted strings from a database
+    * save/retrieve translations or extracted strings from a remote web API
+    * support many different programming languages and file types
+        * JS (of course!)
+        * JSON (with a json schema)
+        * HTML
+        * Ruby
+        * Java (Android or general)
+        * Android xml files
+        * iOS strings files
+        * Objective-C
+        * Swift
+        * iOS xib, nib, or story board files
+        * HAML
+        * YAML
+        * JSP
+        * Javascript Template files (JST)
+        * React/Enact JSX files
+        * PHP
+        * Golang
+        * Python
+* Introduce libraries for various languages like the ResBundle class
+    * allows the loctool to pick out strings from source code exactly the same way as in JS
