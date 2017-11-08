@@ -182,5 +182,5 @@ Here are a proposed set of features to add to the assembly tool.
         * PHP
         * Golang
         * Python
-* Introduce libraries for various languages like the ResBundle class
+* Introduce libraries for various programming languages like the ResBundle class
     * allows the loctool to pick out strings from source code exactly the same way as in JS
