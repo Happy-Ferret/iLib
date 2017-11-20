@@ -157,30 +157,5 @@ Here are a proposed set of features to add to the assembly tool.
 
 ## Localization Tool
 
-* introduce a new localization tool
-    * knows how to pull out strings from source code done with ilib
-    * read/write xliff files with extracted strings or translations
-    * write out json or js files as needed with translations in it
-    * save/retrieve translations or extracted strings from a database
-    * save/retrieve translations or extracted strings from a remote web API
-    * support many different programming languages and file types
-        * JS (of course!)
-        * JSON (with a json schema)
-        * HTML
-        * Ruby
-        * Java (Android or general)
-        * Android xml files
-        * iOS strings files
-        * Objective-C
-        * Swift
-        * iOS xib, nib, or story board files
-        * HAML
-        * YAML
-        * JSP
-        * Javascript Template files (JST)
-        * React/Enact JSX files
-        * PHP
-        * Golang
-        * Python
-* Introduce libraries for various programming languages like the ResBundle class
-    * allows the loctool to pick out strings from source code exactly the same way as in JS
+* The localization tool in tools/loctool has been moved to its own repo https://github.com/ilib-js/loctool
+    * See the documentation in that repo for more information
